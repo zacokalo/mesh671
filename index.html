@@ -194,6 +194,7 @@ h2 { font-family:'EB Garamond',serif; font-size:clamp(28px,4vw,38px); font-weigh
 .mqtt-key { color:var(--mist); min-width:130px; flex-shrink:0; }
 .mqtt-val { font-family:'DM Mono',monospace; font-size:11px; color:var(--reef); text-align:right; word-break:break-all; }
 .mqtt-note { font-size:12px; color:var(--dim); margin-top:14px; line-height:1.65; }
+.mqtt-seal { width:min(360px,100%); height:auto; display:block; }
 code { font-family:'DM Mono',monospace; color:var(--reef); font-size:.9em; }
 
 /* GEAR */
@@ -228,7 +229,7 @@ footer { padding:30px 5vw; border-top:1px solid var(--borderb); display:flex; fl
 
 <nav>
   <div style="display:flex;align-items:center;gap:10px">
-      <svg width="22" height="26" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;opacity:0.8">
+      <svg width="44" height="52" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;opacity:0.8">
         <g fill="none" stroke="var(--sand)" stroke-width="28" stroke-linejoin="round" stroke-linecap="round">
           <polygon points="216,210 296,210 340,440 172,440"/>
           <path d="M 140,110 L 372,110 A 116,116 0 0,1 140,110 Z"/>
@@ -337,64 +338,66 @@ footer { padding:30px 5vw; border-top:1px solid var(--borderb); display:flex; fl
       <div class="step-title">Enable MQTT and configure the broker</div>
       <div class="step-body">Module Config &rarr; MQTT &rarr; toggle on. Use these settings:</div>
       <div style="margin-top:16px;display:flex;justify-content:center">
-          <svg width="300" height="492" viewBox="-14 -14 228 356" xmlns="http://www.w3.org/2000/svg">
-            <!-- Background fill -->
-            <path d="M 100,0 C 100,0 -0.3,74.7 -0.3,164 C -0.3,253.3 100,328 100,328 C 100,328 199.7,251.2 199.7,164 C 199.7,76.8 100,0 100,0 Z"
-              fill="rgba(45,196,168,0.06)" stroke="none"/>
-            <!-- Outer border -->
-            <path d="M 100,0 C 100,0 -0.3,74.7 -0.3,164 C -0.3,253.3 100,328 100,328 C 100,328 199.7,251.2 199.7,164 C 199.7,76.8 100,0 100,0 Z"
-              fill="none" stroke="#2DC4A8" stroke-width="1.8" stroke-linejoin="round"/>
-            <!-- Inner dashed ring -->
-            <path d="M 100,16 C 100,16 14,84 14,164 C 14,243 100,312 100,312 C 100,312 186,238 186,164 C 186,90 100,16 100,16 Z"
-              fill="none" stroke="rgba(196,169,106,0.28)" stroke-width="0.7" stroke-dasharray="5 4"/>
+          <svg class="mqtt-seal" width="360" height="545" viewBox="-18 -58 296 448" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(30 0) translate(100 164) scale(1.28) translate(-100 -164)">
+              <!-- Background fill -->
+              <path d="M 100,0 C 100,0 -0.3,74.7 -0.3,164 C -0.3,253.3 100,328 100,328 C 100,328 199.7,251.2 199.7,164 C 199.7,76.8 100,0 100,0 Z"
+                fill="rgba(45,196,168,0.06)" stroke="none"/>
+              <!-- Outer border -->
+              <path d="M 100,0 C 100,0 -0.3,74.7 -0.3,164 C -0.3,253.3 100,328 100,328 C 100,328 199.7,251.2 199.7,164 C 199.7,76.8 100,0 100,0 Z"
+                fill="none" stroke="#2DC4A8" stroke-width="1.8" stroke-linejoin="round"/>
+              <!-- Inner dashed ring -->
+              <path d="M 100,16 C 100,16 14,84 14,164 C 14,243 100,312 100,312 C 100,312 186,238 186,164 C 186,90 100,16 100,16 Z"
+                fill="none" stroke="rgba(196,169,106,0.28)" stroke-width="0.7" stroke-dasharray="5 4"/>
+            </g>
 
             <!-- Title -->
-            <text x="100" y="46" text-anchor="middle" font-family="monospace" font-size="10" fill="#2DC4A8" letter-spacing="2">MQTT · BROKER</text>
-            <line x1="30" y1="55" x2="170" y2="55" stroke="rgba(196,169,106,0.22)" stroke-width="0.6"/>
+            <text x="130" y="46" text-anchor="middle" font-family="monospace" font-size="10" fill="#2DC4A8" letter-spacing="2">MQTT · BROKER</text>
+            <line x1="36" y1="55" x2="224" y2="55" stroke="rgba(196,169,106,0.22)" stroke-width="0.6"/>
 
             <!-- Rows — key left, value right, generous spacing -->
-            <text x="34"  y="76"  font-family="sans-serif" font-size="11" fill="#7A9A90">Server</text>
-            <text x="166" y="76"  font-family="monospace"  font-size="9.5" fill="#2DC4A8" text-anchor="end">mqtt.meshtastic.org</text>
-            <line x1="30" y1="84" x2="170" y2="84" stroke="rgba(196,169,106,0.08)" stroke-width="0.5"/>
+            <text x="42"  y="76"  font-family="sans-serif" font-size="11" fill="#7A9A90">Server</text>
+            <text x="218" y="76"  font-family="monospace"  font-size="9.5" fill="#2DC4A8" text-anchor="end">mqtt.meshtastic.org</text>
+            <line x1="36" y1="84" x2="224" y2="84" stroke="rgba(196,169,106,0.08)" stroke-width="0.5"/>
 
-            <text x="34"  y="100" font-family="sans-serif" font-size="11" fill="#7A9A90">Username</text>
-            <text x="166" y="100" font-family="monospace"  font-size="9.5" fill="#2DC4A8" text-anchor="end">meshdev</text>
-            <line x1="30" y1="108" x2="170" y2="108" stroke="rgba(196,169,106,0.08)" stroke-width="0.5"/>
+            <text x="42"  y="100" font-family="sans-serif" font-size="11" fill="#7A9A90">Username</text>
+            <text x="218" y="100" font-family="monospace"  font-size="9.5" fill="#2DC4A8" text-anchor="end">meshdev</text>
+            <line x1="36" y1="108" x2="224" y2="108" stroke="rgba(196,169,106,0.08)" stroke-width="0.5"/>
 
-            <text x="34"  y="124" font-family="sans-serif" font-size="11" fill="#7A9A90">Password</text>
-            <text x="166" y="124" font-family="monospace"  font-size="9.5" fill="#2DC4A8" text-anchor="end">large4cats</text>
-            <line x1="30" y1="132" x2="170" y2="132" stroke="rgba(196,169,106,0.08)" stroke-width="0.5"/>
+            <text x="42"  y="124" font-family="sans-serif" font-size="11" fill="#7A9A90">Password</text>
+            <text x="218" y="124" font-family="monospace"  font-size="9.5" fill="#2DC4A8" text-anchor="end">large4cats</text>
+            <line x1="36" y1="132" x2="224" y2="132" stroke="rgba(196,169,106,0.08)" stroke-width="0.5"/>
 
-            <text x="34"  y="148" font-family="sans-serif" font-size="11" fill="#7A9A90">Root topic</text>
-            <text x="166" y="148" font-family="monospace"  font-size="9.5" fill="#2DC4A8" text-anchor="end">msh/GU</text>
-            <line x1="30" y1="156" x2="170" y2="156" stroke="rgba(196,169,106,0.08)" stroke-width="0.5"/>
+            <text x="42"  y="148" font-family="sans-serif" font-size="11" fill="#7A9A90">Root topic</text>
+            <text x="218" y="148" font-family="monospace"  font-size="9.5" fill="#2DC4A8" text-anchor="end">msh/GU</text>
+            <line x1="36" y1="156" x2="224" y2="156" stroke="rgba(196,169,106,0.08)" stroke-width="0.5"/>
 
-            <text x="34"  y="172" font-family="sans-serif" font-size="11" fill="#7A9A90">Encryption</text>
-            <text x="166" y="172" font-family="monospace"  font-size="9.5" fill="#2DC4A8" text-anchor="end">Enabled</text>
-            <line x1="30" y1="180" x2="170" y2="180" stroke="rgba(196,169,106,0.08)" stroke-width="0.5"/>
+            <text x="42"  y="172" font-family="sans-serif" font-size="11" fill="#7A9A90">Encryption</text>
+            <text x="218" y="172" font-family="monospace"  font-size="9.5" fill="#2DC4A8" text-anchor="end">Enabled</text>
+            <line x1="36" y1="180" x2="224" y2="180" stroke="rgba(196,169,106,0.08)" stroke-width="0.5"/>
 
-            <text x="34"  y="196" font-family="sans-serif" font-size="11" fill="#7A9A90">TLS</text>
-            <text x="166" y="196" font-family="monospace"  font-size="9.5" fill="#2DC4A8" text-anchor="end">Enabled</text>
-            <line x1="30" y1="204" x2="170" y2="204" stroke="rgba(196,169,106,0.08)" stroke-width="0.5"/>
+            <text x="42"  y="196" font-family="sans-serif" font-size="11" fill="#7A9A90">TLS</text>
+            <text x="218" y="196" font-family="monospace"  font-size="9.5" fill="#2DC4A8" text-anchor="end">Enabled</text>
+            <line x1="36" y1="204" x2="224" y2="204" stroke="rgba(196,169,106,0.08)" stroke-width="0.5"/>
 
-            <text x="34"  y="220" font-family="sans-serif" font-size="11" fill="#7A9A90">Map reporting</text>
-            <text x="166" y="220" font-family="monospace"  font-size="9.5" fill="#2DC4A8" text-anchor="end">On</text>
-            <line x1="30" y1="230" x2="170" y2="230" stroke="rgba(196,169,106,0.22)" stroke-width="0.6"/>
+            <text x="42"  y="220" font-family="sans-serif" font-size="11" fill="#7A9A90">Map reporting</text>
+            <text x="218" y="220" font-family="monospace"  font-size="9.5" fill="#2DC4A8" text-anchor="end">On</text>
+            <line x1="36" y1="230" x2="224" y2="230" stroke="rgba(196,169,106,0.22)" stroke-width="0.6"/>
 
             <!-- Uplink / downlink chips -->
-            <rect x="30"  y="240" width="62" height="18" rx="2" fill="rgba(45,196,168,0.09)" stroke="rgba(45,196,168,0.28)" stroke-width="0.7"/>
-            <text x="61"  y="252" text-anchor="middle" font-family="monospace" font-size="9" fill="#2DC4A8">Uplink: on</text>
-            <rect x="100" y="240" width="70" height="18" rx="2" fill="rgba(45,196,168,0.09)" stroke="rgba(45,196,168,0.28)" stroke-width="0.7"/>
-            <text x="135" y="252" text-anchor="middle" font-family="monospace" font-size="9" fill="#2DC4A8">Downlink: on</text>
+            <rect x="54"  y="240" width="66" height="18" rx="2" fill="rgba(45,196,168,0.09)" stroke="rgba(45,196,168,0.28)" stroke-width="0.7"/>
+            <text x="87"  y="252" text-anchor="middle" font-family="monospace" font-size="9" fill="#2DC4A8">Uplink: on</text>
+            <rect x="138" y="240" width="78" height="18" rx="2" fill="rgba(45,196,168,0.09)" stroke="rgba(45,196,168,0.28)" stroke-width="0.7"/>
+            <text x="177" y="252" text-anchor="middle" font-family="monospace" font-size="9" fill="#2DC4A8">Downlink: on</text>
 
-            <line x1="30" y1="266" x2="170" y2="266" stroke="rgba(196,169,106,0.15)" stroke-width="0.5"/>
+            <line x1="36" y1="266" x2="224" y2="266" stroke="rgba(196,169,106,0.15)" stroke-width="0.5"/>
 
             <!-- Note text -->
-            <text x="100" y="283" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#3A5048">msh/GU groups Guam traffic.</text>
-            <text x="100" y="296" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#3A5048">msh/US connects to mainland too.</text>
+            <text x="130" y="283" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#3A5048">msh/GU groups Guam traffic.</text>
+            <text x="130" y="296" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#3A5048">msh/US connects to mainland too.</text>
 
             <!-- Latte at the bottom point -->
-            <g transform="translate(84,306) scale(0.07)">
+            <g transform="translate(114,306) scale(0.07)">
               <polygon points="216,210 296,210 340,440 172,440" fill="none" stroke="#C4A96A" stroke-width="24" stroke-linejoin="round"/>
               <path d="M 140,110 L 372,110 A 116,116 0 0,1 140,110 Z" fill="none" stroke="#C4A96A" stroke-width="24"/>
             </g>
@@ -446,7 +449,7 @@ footer { padding:30px 5vw; border-top:1px solid var(--borderb); display:flex; fl
       <a class="gear-link" href="https://www.seeedstudio.com/Wio-Tracker-L1-Pro-p-6454.html?sensecap_affiliate=6bBTsTH&referring_service=link" target="_blank" rel="noopener">Check it out &rarr;</a>
     </div>
   </div>
-  <p class="aff-note">Use the coupon codes above at checkout for a discount &mdash; Mesh671 earns a small commission on each sale which goes toward funding permanent island nodes. Prices approximate.</p>
+  <p class="aff-note">Use the coupon codes above at checkout for a discount &mdash; Mesh671 earns a small commission on each sale which goes towards hosting this site. Prices approximate.</p>
 </section>
 
 <div class="weave" aria-hidden="true"></div>
@@ -454,7 +457,7 @@ footer { padding:30px 5vw; border-top:1px solid var(--borderb); display:flex; fl
 <section id="community">
   <div class="sec-eye">Community</div>
   <h2>The mesh grows when you join it</h2>
-  <p class="sec-sub">No company owns Mesh671. No one can shut it down. Every node someone puts up strengthens something that will outlast any individual piece of hardware. The Guam Amateur Radio Club keeps it coordinated &mdash; but the network itself belongs to the island.</p>
+  <p class="sec-sub">No company owns Mesh671. No one can shut it down. Every node someone puts up strengthens something that will outlast any individual piece of hardware. The network itself belongs to everyone on the island.</p>
   <div class="comm-grid">
     <div class="comm-card"><div class="comm-title">Guam Amateur Radio Club</div><div class="comm-body">Monthly meetings with hands-on node help, demos, and community. Beginners welcome &mdash; no license required to participate in the mesh.</div><a href="mailto:mesh@caldwell.tech">Get in touch &rarr;</a></div>
     <div class="comm-card"><div class="comm-title">Put a node on your roof</div><div class="comm-body">High ground is gold &mdash; Nimitz Hill, Barrigada Heights, anywhere with line of sight. A solar P1 costs about $60 and runs forever. Reach out and we&rsquo;ll help you place it well.</div><a href="mailto:mesh@caldwell.tech">Talk to us about placement &rarr;</a></div>
@@ -467,7 +470,7 @@ footer { padding:30px 5vw; border-top:1px solid var(--borderb); display:flex; fl
 <footer>
   <div class="footer-top">
     <div style="display:flex;align-items:center;gap:12px">
-      <svg width="32" height="32" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" style="opacity:0.75;flex-shrink:0">
+      <svg width="64" height="64" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" style="opacity:0.75;flex-shrink:0">
         <g fill="none" stroke="var(--sand)" stroke-width="28" stroke-linejoin="round" stroke-linecap="round">
           <polygon points="216,210 296,210 340,440 172,440"/>
           <path d="M 140,110 L 372,110 A 116,116 0 0,1 140,110 Z"/>
@@ -481,7 +484,7 @@ footer { padding:30px 5vw; border-top:1px solid var(--borderb); display:flex; fl
       <a href="mailto:mesh@caldwell.tech">mesh@caldwell.tech</a>
     </div>
   </div>
-  <div class="footer-copy">Community mesh network for Guam and the Marianas &nbsp;&middot;&nbsp; Built by <a href="https://zachc.net" style="color:var(--mist)">Zac Caldwell</a></div>
+  <div class="footer-copy">Community mesh network for Guam and the Marianas &nbsp;&middot;&nbsp; Built by <a href="https://caldwell.tech" style="color:var(--mist)">Zac Caldwell</a></div>
 </footer>
 
 <script>
