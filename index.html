@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Mesh671 — Guam's community LoRa mesh network. Free, off-grid messaging and GPS tracking connecting the island. No towers, no subscription.">
+<title>Mesh671 — Guam's Community Mesh Network</title>
+<link rel="canonical" href="https://mesh671.caldwell.tech">
+<meta property="og:title" content="Mesh671 — Guam's Community Mesh Network">
+<meta property="og:description" content="Free, off-grid messaging and GPS tracking connecting Guam. No towers, no subscription. Add your node.">
+<meta property="og:url" content="https://mesh671.caldwell.tech">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#111614">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── DARK (default) ── */
+:root {
+  --rock:    #111614; --rock2: #161C1A; --rock3: #1C2420;
+  --reef:    #2DC4A8; --reef2: #1FA090;
+  --sand:    #C4A96A;
+  --mist:    #5A7068; --text: #E0EDE8; --textd: #A8C0B8; --dim: #3A5048;
+  --border:  rgba(196,169,106,0.14);
+  --borderb: rgba(196,169,106,0.22);
+  --navbg:   rgba(17,22,20,0.96);
+  --ce: rgba(196,169,106,0.15);
+  --cn: rgba(196,169,106,0.35);
+  --cp: rgba(45,196,168,0.55);
+}
+
+/* ── LIGHT — system ── */
+@media (prefers-color-scheme: light) {
+  :root {
+    --rock:    #F0EBE0; --rock2: #E8E0D0; --rock3: #DDD4C0;
+    --reef:    #1A7A68; --reef2: #145A50;
+    --sand:    #8A6820;
+    --mist:    #7A6A50; --text: #1C2018; --textd: #4A5040; --dim: #A09070;
+    --border:  rgba(100,80,30,0.13);
+    --borderb: rgba(100,80,30,0.28);
+    --navbg:   rgba(240,235,224,0.96);
+    --ce: rgba(100,80,30,0.18);
+    --cn: rgba(100,80,30,0.3);
+    --cp: rgba(26,122,104,0.55);
+  }
+}
+
+/* ── MANUAL OVERRIDES ── */
+[data-theme="dark"] {
+  --rock:    #111614; --rock2: #161C1A; --rock3: #1C2420;
+  --reef:    #2DC4A8; --reef2: #1FA090; --sand: #C4A96A;
+  --mist:    #5A7068; --text: #E0EDE8; --textd: #A8C0B8; --dim: #3A5048;
+  --border:  rgba(196,169,106,0.14); --borderb: rgba(196,169,106,0.22);
+  --navbg:   rgba(17,22,20,0.96);
+  --ce: rgba(196,169,106,0.15); --cn: rgba(196,169,106,0.35); --cp: rgba(45,196,168,0.55);
+}
+[data-theme="light"] {
+  --rock:    #F0EBE0; --rock2: #E8E0D0; --rock3: #DDD4C0;
+  --reef:    #1A7A68; --reef2: #145A50; --sand: #8A6820;
+  --mist:    #7A6A50; --text: #1C2018; --textd: #4A5040; --dim: #A09070;
+  --border:  rgba(100,80,30,0.13); --borderb: rgba(100,80,30,0.28);
+  --navbg:   rgba(240,235,224,0.96);
+  --ce: rgba(100,80,30,0.18); --cn: rgba(100,80,30,0.3); --cp: rgba(26,122,104,0.55);
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--rock); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.65; transition: background .3s, color .3s; }
+a { color: var(--reef); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── NAV ── */
+nav {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 5vw;
+  border-bottom: 1px solid var(--borderb);
+  position: sticky; top: 0;
+  background: var(--navbg); backdrop-filter: blur(10px); z-index: 100;
+  transition: background .3s, border-color .3s;
+}
+.logo { font-family: 'EB Garamond', serif; font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: 1px; transition: color .3s; }
+.logo span { color: var(--reef); transition: color .3s; }
+.nav-links { display: flex; gap: 24px; font-size: 13px; font-weight: 500; }
+.nav-links a { color: var(--mist); transition: color .3s; }
+.nav-links a:hover { color: var(--text); text-decoration: none; }
+.theme-btn {
+  background: transparent; border: 1px solid var(--borderb); border-radius: 3px;
+  padding: 5px 10px; cursor: pointer; display: flex; align-items: center; gap: 5px;
+  font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--mist);
+  transition: border-color .2s, color .2s;
+}
+.theme-btn:hover { color: var(--text); border-color: var(--sand); }
+@media (max-width: 640px) { .nav-links { display: none; } }
+
+/* ── HERO ── */
+.hero {
+  position: relative; padding: 88px 5vw 80px;
+  overflow: hidden; min-height: 480px;
+  display: flex; align-items: center;
+  background: var(--rock); transition: background .3s;
+}
+#mesh-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.9; }
+.hero-content { position: relative; z-index: 2; max-width: 600px; }
+
+.eyebrow {
+  font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .2em;
+  color: var(--sand); text-transform: uppercase; margin-bottom: 20px;
+  display: flex; align-items: center; gap: 10px; transition: color .3s;
+}
+.eyebrow::before { content: ''; display: block; width: 26px; height: 1px; background: var(--sand); flex-shrink: 0; }
+
+.pulse-wrap { display: flex; align-items: center; gap: 8px; margin-bottom: 20px; }
+.pulse-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--reef); position: relative; flex-shrink: 0; transition: background .3s; }
+.pulse-dot::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 1px solid var(--reef); animation: pulse 2.5s ease-out infinite; }
+@keyframes pulse { 0%{opacity:.7;transform:scale(1)} 100%{opacity:0;transform:scale(2.4)} }
+@media (prefers-reduced-motion: reduce) { .pulse-dot::after { animation: none; } }
+.pulse-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--reef); letter-spacing: .1em; text-transform: uppercase; transition: color .3s; }
+
+h1 { font-family: 'EB Garamond', serif; font-size: clamp(40px,6vw,58px); font-weight: 700; line-height: 1.08; margin-bottom: 22px; color: var(--text); transition: color .3s; }
+h1 em { font-style: italic; color: var(--reef); transition: color .3s; }
+.hero-sub { font-size: 17px; color: var(--textd); line-height: 1.7; margin-bottom: 36px; max-width: 500px; transition: color .3s; }
+
+.btn-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn-primary { display: inline-block; background: var(--reef); color: var(--rock); font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 13px; padding: 12px 24px; border-radius: 3px; border: none; cursor: pointer; letter-spacing: .05em; text-transform: uppercase; text-decoration: none; transition: background .15s; }
+.btn-primary:hover { background: var(--reef2); text-decoration: none; }
+.btn-ghost { display: inline-block; background: transparent; color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 13px; padding: 12px 24px; border-radius: 3px; border: 1px solid var(--borderb); cursor: pointer; letter-spacing: .05em; text-transform: uppercase; text-decoration: none; transition: border-color .15s, color .3s; }
+.btn-ghost:hover { border-color: var(--sand); text-decoration: none; }
+
+/* ── WEAVE ── */
+.weave { height: 28px; border-top: 1px solid var(--borderb); border-bottom: 1px solid var(--borderb); background-image: repeating-linear-gradient(45deg,transparent,transparent 5px,var(--borderb) 5px,var(--borderb) 6px), repeating-linear-gradient(-45deg,transparent,transparent 5px,var(--borderb) 5px,var(--borderb) 6px); }
+
+/* ── STATS ── */
+.stats { display: grid; grid-template-columns: repeat(3,1fr); background: var(--rock2); transition: background .3s; }
+.stat { padding: 28px 5vw; border-right: 1px solid var(--border); transition: border-color .3s; }
+.stat:last-child { border-right: none; }
+.stat-num { font-family: 'EB Garamond', serif; font-size: 34px; color: var(--sand); line-height: 1; margin-bottom: 5px; transition: color .3s; }
+.stat-label { font-size: 12px; color: var(--mist); letter-spacing: .02em; transition: color .3s; }
+@media (max-width: 520px) { .stats { grid-template-columns: 1fr; } .stat { border-right: none; border-bottom: 1px solid var(--border); } .stat:last-child { border-bottom: none; } }
+
+/* ── SECTIONS ── */
+section { padding: 72px 5vw; background: var(--rock); transition: background .3s; }
+section.alt { background: var(--rock2); }
+.sec-eye { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .22em; color: var(--sand); text-transform: uppercase; margin-bottom: 10px; transition: color .3s; }
+h2 { font-family: 'EB Garamond', serif; font-size: clamp(28px,4vw,38px); font-weight: 700; line-height: 1.15; margin-bottom: 12px; color: var(--text); transition: color .3s; }
+.sec-sub { font-size: 16px; color: var(--textd); max-width: 560px; margin-bottom: 44px; line-height: 1.7; transition: color .3s; }
+
+/* ── WHY GRID ── */
+.why-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+.why-card { background: var(--rock); padding: 28px 24px; transition: background .2s; }
+.why-card:hover { background: var(--rock3); }
+.why-icon { font-size: 20px; margin-bottom: 12px; display: block; }
+.why-title { font-family: 'EB Garamond', serif; font-size: 17px; font-weight: 700; margin-bottom: 8px; color: var(--text); transition: color .3s; }
+.why-body { font-size: 13px; color: var(--textd); line-height: 1.65; transition: color .3s; }
+
+/* ── STEPS ── */
+.steps { display: flex; flex-direction: column; }
+.step { display: flex; gap: 22px; padding: 22px 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
+.step:last-child { border-bottom: none; }
+.step-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--sand); min-width: 24px; padding-top: 4px; flex-shrink: 0; transition: color .3s; }
+.step-title { font-family: 'EB Garamond', serif; font-size: 17px; font-weight: 700; margin-bottom: 6px; color: var(--text); transition: color .3s; }
+.step-body { font-size: 13px; color: var(--textd); line-height: 1.65; transition: color .3s; }
+.chip { display: inline-block; font-family: 'DM Mono', monospace; font-size: 11px; background: rgba(45,196,168,0.07); color: var(--reef); border: 1px solid rgba(45,196,168,0.18); padding: 3px 9px; border-radius: 2px; margin-top: 8px; margin-right: 6px; transition: color .3s; }
+
+/* ── MQTT ── */
+.mqtt-box { background: var(--rock3); border-left: 2px solid var(--reef); padding: 18px 20px; margin-top: 16px; border-radius: 0 3px 3px 0; transition: background .3s, border-color .3s; }
+.mqtt-box-title { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--reef); margin-bottom: 14px; transition: color .3s; }
+.mqtt-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 7px 0; border-bottom: 1px solid rgba(196,169,106,0.07); font-size: 13px; }
+.mqtt-row:last-of-type { border-bottom: none; }
+.mqtt-key { color: var(--mist); min-width: 130px; flex-shrink: 0; transition: color .3s; }
+.mqtt-val { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--reef); text-align: right; word-break: break-all; transition: color .3s; }
+.mqtt-note { font-size: 12px; color: var(--dim); margin-top: 14px; line-height: 1.65; transition: color .3s; }
+code { font-family: 'DM Mono', monospace; color: var(--reef); font-size: .9em; }
+
+/* ── GEAR ── */
+.gear-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(210px,1fr)); gap: 12px; }
+.gear-card { background: var(--rock3); border: 1px solid var(--borderb); border-radius: 3px; padding: 22px 20px; display: flex; flex-direction: column; transition: border-color .2s, transform .15s, background .3s; }
+.gear-card:hover { border-color: var(--reef); transform: translateY(-2px); }
+.gear-badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: .12em; text-transform: uppercase; padding: 3px 8px; background: rgba(45,196,168,0.07); color: var(--reef); border: 1px solid rgba(45,196,168,0.16); margin-bottom: 14px; align-self: flex-start; transition: color .3s; }
+.gear-name { font-family: 'EB Garamond', serif; font-size: 17px; font-weight: 700; margin-bottom: 7px; color: var(--text); transition: color .3s; }
+.gear-desc { font-size: 13px; color: var(--textd); line-height: 1.6; flex: 1; margin-bottom: 16px; transition: color .3s; }
+.gear-price { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--sand); transition: color .3s; }
+.gear-link { display: inline-block; margin-top: 10px; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--reef); border: 1px solid rgba(45,196,168,0.22); padding: 5px 10px; border-radius: 2px; transition: background .15s; text-decoration: none; }
+.gear-link:hover { background: rgba(45,196,168,0.07); text-decoration: none; }
+.gear-code { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--sand); margin-top: 6px; opacity: .8; }
+.aff-note { font-size: 12px; color: var(--dim); margin-top: 30px; line-height: 1.6; transition: color .3s; }
+
+/* ── COMMUNITY ── */
+.comm-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: 12px; }
+.comm-card { background: var(--rock3); border: 1px solid var(--borderb); border-radius: 3px; padding: 22px 20px; transition: background .3s, border-color .3s; }
+.comm-title { font-family: 'EB Garamond', serif; font-size: 17px; font-weight: 700; margin-bottom: 7px; color: var(--text); transition: color .3s; }
+.comm-body { font-size: 13px; color: var(--textd); line-height: 1.65; margin-bottom: 14px; transition: color .3s; }
+.comm-card a { font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--reef); transition: color .3s; }
+
+/* ── FOOTER ── */
+footer { padding: 30px 5vw; border-top: 1px solid var(--borderb); background: var(--rock2); display: flex; flex-direction: column; gap: 10px; transition: background .3s, border-color .3s; }
+.footer-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.footer-links { display: flex; gap: 22px; }
+.footer-links a { font-size: 12px; color: var(--dim); transition: color .3s; }
+.footer-links a:hover { color: var(--mist); text-decoration: none; }
+.footer-copy { font-size: 12px; color: var(--dim); transition: color .3s; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">MESH<span>671</span></div>
+  <div class="nav-links">
+    <a href="#why">Why mesh?</a>
+    <a href="#connect">Get connected</a>
+    <a href="#mqtt">MQTT bridge</a>
+    <a href="#gear">Gear</a>
+    <a href="#community">Community</a>
+  </div>
+  <button class="theme-btn" id="theme-btn" aria-label="Toggle colour mode">
+    <span id="theme-icon">&#9728;&#65039;</span>
+    <span id="theme-label">Light</span>
+  </button>
+</nav>
+
+<div class="hero">
+  <canvas id="mesh-canvas"></canvas>
+  <div class="hero-content">
+    <div class="eyebrow">Guam &middot; Marianas &middot; Pacific</div>
+    <div class="pulse-wrap">
+      <div class="pulse-dot"></div>
+      <span class="pulse-label">Mesh active</span>
+    </div>
+    <h1>The mesh is<br>always <em>on</em></h1>
+    <p class="hero-sub">Nodes come and go &mdash; a solar node on a roof, a tracker on a fishing boat, a kit at someone&rsquo;s desk. Together they form something that belongs to no one and serves everyone. Add yours and become part of it.</p>
+    <div class="btn-row">
+      <a class="btn-primary" href="#connect">Add your node &rarr;</a>
+      <a class="btn-ghost" href="#why">How it works</a>
+    </div>
+  </div>
+</div>
+
+<div class="weave" aria-hidden="true"></div>
+
+<div class="stats">
+  <div class="stat"><div class="stat-num">15km</div><div class="stat-label">Line-of-sight range per hop</div></div>
+  <div class="stat"><div class="stat-num">$0/mo</div><div class="stat-label">Cost to use the mesh</div></div>
+  <div class="stat"><div class="stat-num">915MHz</div><div class="stat-label">ISM band &mdash; no license needed</div></div>
+</div>
+
+<section id="why">
+  <div class="sec-eye">What it is</div>
+  <h2>A community radio network for Guam</h2>
+  <p class="sec-sub">Meshtastic is open-source LoRa mesh radio &mdash; small, cheap devices that relay text messages and GPS positions across long distances without internet or cell infrastructure. Mesh671 is Guam&rsquo;s local deployment, run by the community, for the community.</p>
+  <div class="why-grid">
+    <div class="why-card"><span class="why-icon">📡</span><div class="why-title">Mesh networking</div><div class="why-body">Every node is also a relay. A message hops from node to node until it arrives &mdash; the more nodes on the island, the stronger and farther the network reaches.</div></div>
+    <div class="why-card"><span class="why-icon">📍</span><div class="why-title">GPS tracking</div><div class="why-body">Share your location on a private map with friends or family. Great for boating, hiking Guam&rsquo;s trails, or keeping track of where your group is scattered.</div></div>
+    <div class="why-card"><span class="why-icon">🔒</span><div class="why-title">Private channels</div><div class="why-body">Set up a private channel with a passphrase for your household or crew. AES-128 encrypted. The public Mesh671 channel is open for island-wide conversation.</div></div>
+    <div class="why-card"><span class="why-icon">⚡</span><div class="why-title">Low power</div><div class="why-body">A USB power bank keeps a node running for days. A small solar panel keeps it alive indefinitely. A node on your roof costs almost nothing to run.</div></div>
+    <div class="why-card"><span class="why-icon">📻</span><div class="why-title">Ham radio friendly</div><div class="why-body">915 MHz ISM band &mdash; no license needed to participate. Licensed hams can run higher-power backbone nodes that help build the network&rsquo;s spine.</div></div>
+    <div class="why-card"><span class="why-icon">🌏</span><div class="why-title">Works when it counts</div><div class="why-body">Cell networks go down in typhoons. This doesn&rsquo;t &mdash; there&rsquo;s nothing central to fail. It&rsquo;s not built for emergencies specifically, but it&rsquo;s good to have when they happen.</div></div>
+  </div>
+</section>
+
+<div class="weave" aria-hidden="true"></div>
+
+<section id="connect" class="alt">
+  <div class="sec-eye">Get on the mesh</div>
+  <h2>Three steps to your first node</h2>
+  <p class="sec-sub">Works on iPhone or Android. DIY kits need a laptop for the initial flash &mdash; after that everything runs from your phone.</p>
+  <div class="steps">
+    <div class="step"><span class="step-num">01</span><div><div class="step-title">Get a node and power it up</div><div class="step-body">Any Meshtastic-compatible hardware works. See the gear section for what we recommend for Guam. For DIY kits, open the Meshtastic web flasher in Chrome or Edge, pick your board, and flash the firmware &mdash; takes about 5 minutes. Ready-to-go devices like the T1000-E just need power.</div><span class="chip">flasher.meshtastic.org</span></div></div>
+    <div class="step"><span class="step-num">02</span><div><div class="step-title">Install the app and pair your node</div><div class="step-body">Download the free Meshtastic app on iOS or Android. Tap the + button and pair with your node over Bluetooth. Give your node a name &mdash; callsign, handle, whatever you want others on the mesh to see.</div><span class="chip">iOS App Store</span><span class="chip">Google Play</span></div></div>
+    <div class="step"><span class="step-num">03</span><div><div class="step-title">Set your region and join Mesh671</div><div class="step-body">In the app go to Radio Config &rarr; LoRa &rarr; Region and select US_915. Then go to Channels and add the Mesh671 public channel. You&rsquo;re on the island mesh.</div><span class="chip">Region: US_915</span><span class="chip">Channel: Mesh671</span></div></div>
+    <div class="step"><span class="step-num">+</span><div><div class="step-title">Want a private channel for your group?</div><div class="step-body">In Channels, add a new channel with a name and passphrase you share with your people. Anyone with the same channel name and PSK can communicate privately, encrypted end-to-end. Share it as a QR code from the app for easy setup on family phones.</div></div></div>
+  </div>
+</section>
+
+<div class="weave" aria-hidden="true"></div>
+
+<section id="mqtt">
+  <div class="sec-eye">Internet bridge</div>
+  <h2>Connect beyond radio range with MQTT</h2>
+  <p class="sec-sub">MQTT lets a Wi-Fi or phone-connected node bridge your local LoRa mesh to the internet, connecting nodes across Guam or across the Pacific that can&rsquo;t hear each other over radio.</p>
+  <div class="steps">
+    <div class="step"><span class="step-num">01</span><div><div class="step-title">You need a gateway node or your phone</div><div class="step-body">ESP32-based nodes (T-Beam, Heltec) can connect directly to Wi-Fi and act as a gateway for the whole local mesh. If you have an nRF52840 kit like the XIAO, use your phone as a proxy instead &mdash; enable Client Proxy in MQTT settings and keep Bluetooth connected.</div></div></div>
+    <div class="step"><span class="step-num">02</span><div>
+      <div class="step-title">Enable MQTT and configure the broker</div>
+      <div class="step-body">Go to Module Config &rarr; MQTT and toggle it on. Use these settings to join the Guam-specific topic on the public Meshtastic broker:</div>
+      <div class="mqtt-box">
+        <div class="mqtt-box-title">Mesh671 MQTT config</div>
+        <div class="mqtt-row"><span class="mqtt-key">Server</span><span class="mqtt-val">mqtt.meshtastic.org</span></div>
+        <div class="mqtt-row"><span class="mqtt-key">Username</span><span class="mqtt-val">meshdev</span></div>
+        <div class="mqtt-row"><span class="mqtt-key">Password</span><span class="mqtt-val">large4cats</span></div>
+        <div class="mqtt-row"><span class="mqtt-key">Root topic</span><span class="mqtt-val">msh/GU</span></div>
+        <div class="mqtt-row"><span class="mqtt-key">Encryption</span><span class="mqtt-val">Enabled</span></div>
+        <div class="mqtt-row"><span class="mqtt-key">TLS</span><span class="mqtt-val">Enabled</span></div>
+        <div class="mqtt-row"><span class="mqtt-key">Map reporting</span><span class="mqtt-val">Enable to appear on public map</span></div>
+        <p class="mqtt-note">Using <code>msh/GU</code> keeps Guam traffic grouped on the broker. The default <code>msh/US</code> also works and connects you to mainland nodes &mdash; useful if family stateside runs Meshtastic too.</p>
+      </div>
+    </div></div>
+    <div class="step"><span class="step-num">03</span><div><div class="step-title">Enable uplink and downlink on your channel</div><div class="step-body">In Channels, open Mesh671 or LongFast and enable both Uplink and Downlink. Save and reboot. Your node will push local radio traffic to the broker and pull remote traffic back down to your local mesh.</div><span class="chip">Uplink: on</span><span class="chip">Downlink: on</span></div></div>
+    <div class="step"><span class="step-num">!</span><div><div class="step-title">A note on encryption over MQTT</div><div class="step-body">With Encryption enabled, your channel&rsquo;s key is preserved over MQTT. The default LongFast channel uses a publicly known key &mdash; treat it as an open channel. For private comms use a channel with your own PSK. Position data sent via Map Reporting is always unencrypted so the public map can display it.</div></div></div>
+  </div>
+</section>
+
+<div class="weave" aria-hidden="true"></div>
+
+<section id="gear" class="alt">
+  <div class="sec-eye">Get started</div>
+  <h2>Find your node</h2>
+  <p class="sec-sub">All links use Mesh671 affiliate codes &mdash; a small commission comes back to the community to help fund permanent island nodes at no extra cost to you. Discount codes are applied at checkout.</p>
+  <div class="gear-grid">
+
+    <div class="gear-card">
+      <span class="gear-badge">Best to start</span>
+      <div class="gear-name">SenseCAP T1000-E</div>
+      <div class="gear-desc">Credit-card sized, GPS built in, ready out of the box. Drop it in your bag, your car, or your kid&rsquo;s backpack. No soldering, no setup beyond pairing. Our top pick if you just want it to work.</div>
+      <div class="gear-price">~$30 &mdash; save 10%</div>
+      <div class="gear-code">Code: GD4CW452</div>
+      <a class="gear-link" href="https://www.seeedstudio.com/SenseCAP-Card-Tracker-T1000-E-for-Meshtastic-p-5913.html?sensecap_affiliate=6bBTsTH&referring_service=link" target="_blank" rel="noopener">Check it out &rarr;</a>
+    </div>
+
+    <div class="gear-card">
+      <span class="gear-badge">Workshop kit</span>
+      <div class="gear-name">XIAO nRF52840 + Wio-SX1262</div>
+      <div class="gear-desc">The kit we build at Guam ARC workshops. Tiny, extremely low power, and fully open. Flash it in your browser in 5 minutes. Great if you want to understand how it works or build a custom enclosure.</div>
+      <div class="gear-price">~$20 &mdash; save 2%</div>
+      <div class="gear-code">Code: 9WPZ3S45</div>
+      <a class="gear-link" href="https://www.seeedstudio.com/XIAO-nRF52840-Wio-SX1262-Kit-for-Meshtastic-p-6400.html?sensecap_affiliate=6bBTsTH&referring_service=link" target="_blank" rel="noopener">Check it out &rarr;</a>
+    </div>
+
+    <div class="gear-card">
+      <span class="gear-badge">Solar node</span>
+      <div class="gear-name">Seeed Solar Node P1</div>
+      <div class="gear-desc">Mount on your roof, point the panel south, forget about it. What the Mesh671 backbone nodes run. Weatherproof, solar powered, extends coverage for your whole neighborhood indefinitely.</div>
+      <div class="gear-price">~$60 &mdash; save 5%</div>
+      <div class="gear-code">Code: JAS5HXKB</div>
+      <a class="gear-link" href="https://www.seeedstudio.com/SenseCAP-Solar-Node-P1-for-Meshtastic-LoRa-p-6425.html?sensecap_affiliate=6bBTsTH&referring_service=link" target="_blank" rel="noopener">Check it out &rarr;</a>
+    </div>
+
+    <div class="gear-card">
+      <span class="gear-badge">Boat / vehicle</span>
+      <div class="gear-name">Wio Tracker L1 Pro</div>
+      <div class="gear-desc">Better GPS sensitivity for moving targets. Good for boats moving in and out of mesh coverage or vehicles driving cross-island. Syncs position back whenever it&rsquo;s in range.</div>
+      <div class="gear-price">~$45 &mdash; save 8%</div>
+      <div class="gear-code">Code: 5BJB7IIW</div>
+      <a class="gear-link" href="https://www.seeedstudio.com/Wio-Tracker-L1-Pro-p-6454.html?sensecap_affiliate=6bBTsTH&referring_service=link" target="_blank" rel="noopener">Check it out &rarr;</a>
+    </div>
+
+  </div>
+  <p class="aff-note">Affiliate links and discount codes via Seeed Studio &mdash; codes apply at checkout.</p>
+</section>
+
+<div class="weave" aria-hidden="true"></div>
+
+<section id="community">
+  <div class="sec-eye">Community</div>
+  <h2>The mesh grows when you join it</h2>
+  <p class="sec-sub">No company owns Mesh671. No one can shut it down. Every node someone puts up strengthens something that will outlast any individual piece of hardware. The Guam Amateur Radio Club keeps it coordinated &mdash; but the network itself belongs to the island.</p>
+  <div class="comm-grid">
+    <div class="comm-card"><div class="comm-title">Guam Amateur Radio Club</div><div class="comm-body">Monthly meetings where you can get hands-on help with your node, see live demos, and connect with other operators. No license required to participate &mdash; all are welcome.</div><a href="mailto:mesh@caldwell.tech">Get in touch &rarr;</a></div>
+    <div class="comm-card"><div class="comm-title">Put a node on your roof</div><div class="comm-body">High ground is especially valuable &mdash; Nimitz Hill, Barrigada Heights, anywhere with a good view. A solar P1 costs about $60 and runs indefinitely. Reach out and we&rsquo;ll help you place it well.</div><a href="mailto:mesh@caldwell.tech">Talk to us about placement &rarr;</a></div>
+    <div class="comm-card"><div class="comm-title">See the mesh live</div><div class="comm-body">Meshtastic.org hosts a public map of active nodes. Enable Map Reporting in your MQTT settings and your node shows up automatically. Good way to check coverage before heading somewhere remote.</div><a href="https://meshtastic.org/map/" target="_blank" rel="noopener">Open the public map &rarr;</a></div>
+  </div>
+</section>
+
+<div class="weave" aria-hidden="true"></div>
+
+<footer>
+  <div class="footer-top">
+    <div class="logo" style="font-size:18px">MESH<span>671</span></div>
+    <div class="footer-links">
+      <a href="https://meshtastic.org" target="_blank" rel="noopener">Meshtastic.org</a>
+      <a href="https://www.seeedstudio.com" target="_blank" rel="noopener">Seeed Studio</a>
+      <a href="mailto:mesh@caldwell.tech">mesh@caldwell.tech</a>
+    </div>
+  </div>
+  <div class="footer-copy">
+    Community mesh network for Guam and the Marianas &nbsp;&middot;&nbsp;
+    Built by <a href="https://zachc.net" style="color:var(--mist)">Zac Caldwell</a> &nbsp;&middot;&nbsp;
+    Hardware sponsored by <a href="https://www.seeedstudio.com" style="color:var(--mist)">Seeed Studio</a>
+  </div>
+</footer>
+
+<script>
+/* ── THEME TOGGLE ── */
+(function () {
+  var root  = document.documentElement;
+  var btn   = document.getElementById('theme-btn');
+  var icon  = document.getElementById('theme-icon');
+  var label = document.getElementById('theme-label');
+  var sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+  var saved = localStorage.getItem('mesh671-theme');
+  var current = saved || (sysDark.matches ? 'dark' : 'light');
+
+  function apply(t) {
+    current = t;
+    root.setAttribute('data-theme', t);
+    icon.textContent  = t === 'dark' ? '\u2600\uFE0F' : '\uD83C\uDF19';
+    label.textContent = t === 'dark' ? 'Light' : 'Dark';
+    localStorage.setItem('mesh671-theme', t);
+  }
+
+  apply(current);
+  btn.addEventListener('click', function () { apply(current === 'dark' ? 'light' : 'dark'); });
+  sysDark.addEventListener('change', function (e) {
+    if (!localStorage.getItem('mesh671-theme')) apply(e.matches ? 'dark' : 'light');
+  });
+}());
+
+/* ── MESH CANVAS ANIMATION ── */
+(function () {
+  var canvas = document.getElementById('mesh-canvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W = 0, H = 0;
+
+  var nodeProps = [
+    [0.10,0.15],[0.26,0.07],[0.44,0.18],[0.60,0.08],
+    [0.76,0.20],[0.91,0.10],[0.88,0.52],[0.72,0.62],
+    [0.54,0.74],[0.36,0.60],[0.18,0.70],[0.07,0.48],
+    [0.30,0.36],[0.52,0.40],[0.70,0.36],[0.84,0.74],
+  ];
+
+  var edges = [
+    [0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],
+    [8,9],[9,10],[10,11],[11,0],[12,1],[12,2],[12,9],
+    [12,10],[13,2],[13,3],[13,7],[13,14],[14,4],[14,6],
+    [14,7],[15,6],[15,7],[15,8],[0,12],[5,14],[11,12]
+  ];
+
+  // Only activate a handful of packets at a time — most start dormant with long waits
+  var packets = edges.map(function(e) {
+    return {
+      edge: e, t: Math.random(),
+      speed: 0.00018 + Math.random() * 0.0002,
+      active: Math.random() > 0.92,
+      wait: Math.floor(Math.random() * 2000)
+    };
+  });
+
+  function resize() {
+    W = canvas.offsetWidth; H = canvas.offsetHeight;
+    canvas.width = W; canvas.height = H;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    var nodes = nodeProps.map(function(p) { return [p[0]*W, p[1]*H]; });
+
+    // Edges — subtle sand color
+    ctx.strokeStyle = 'rgba(196,169,106,0.15)';
+    ctx.lineWidth = 0.7;
+    edges.forEach(function(e) {
+      ctx.beginPath();
+      ctx.moveTo(nodes[e[0]][0], nodes[e[0]][1]);
+      ctx.lineTo(nodes[e[1]][0], nodes[e[1]][1]);
+      ctx.stroke();
+    });
+
+    // Nodes — subtle sand dots
+    ctx.fillStyle = 'rgba(196,169,106,0.35)';
+    nodes.forEach(function(n) {
+      ctx.beginPath();
+      ctx.arc(n[0], n[1], 1.8, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    // Packets — clean teal dot, no tail
+    packets.forEach(function(p) {
+      if (!p.active) {
+        p.wait--;
+        if (p.wait <= 0) { p.active = true; p.t = 0; }
+        return;
+      }
+      p.t += p.speed;
+      if (p.t >= 1) {
+        p.t = 0; p.active = false;
+        p.wait = 800 + Math.floor(Math.random() * 2000);
+        return;
+      }
+      var a = p.edge[0], b = p.edge[1];
+      var px = nodes[a][0] + (nodes[b][0] - nodes[a][0]) * p.t;
+      var py = nodes[a][1] + (nodes[b][1] - nodes[a][1]) * p.t;
+      ctx.beginPath();
+      ctx.arc(px, py, 2.2, 0, Math.PI * 2);
+      ctx.fillStyle = '#2DC4A8';
+      ctx.globalAlpha = 0.85;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    });
+
+    requestAnimationFrame(draw);
+  }
+
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    draw();
+  } else {
+    var nodes = nodeProps.map(function(p) { return [p[0]*W, p[1]*H]; });
+    ctx.strokeStyle = 'rgba(196,169,106,0.15)';
+    ctx.lineWidth = 0.7;
+    edges.forEach(function(e) {
+      ctx.beginPath();
+      ctx.moveTo(nodes[e[0]][0], nodes[e[0]][1]);
+      ctx.lineTo(nodes[e[1]][0], nodes[e[1]][1]);
+      ctx.stroke();
+    });
+    ctx.fillStyle = 'rgba(196,169,106,0.35)';
+    nodes.forEach(function(n) {
+      ctx.beginPath();
+      ctx.arc(n[0], n[1], 1.8, 0, Math.PI * 2);
+      ctx.fill();
+    });
+  }
+}());</script>
+</body>
+</html>
