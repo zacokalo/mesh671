@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mesh671 Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;600&family=DM+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rock: #111614; --rock2: #161C1A; --rock3: #1C2420;
+    --reef: #2DC4A8; --sand: #C4A96A; --text: #E0EDE8;
+    --textd: #A8C0B8; --mist: #5A7068; --border: rgba(196,169,106,0.18);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--rock); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.7; padding: 48px 5vw; max-width: 860px; margin: 0 auto; }
+  h1 { font-family: 'EB Garamond', serif; font-size: 40px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  h2 { font-family: 'EB Garamond', serif; font-size: 26px; font-weight: 700; color: var(--text); margin: 48px 0 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+  h3 { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--sand); margin: 28px 0 10px; }
+  p { color: var(--textd); margin-bottom: 14px; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 36px 0; }
+  code { font-family: 'DM Mono', monospace; font-size: 13px; background: var(--rock3); color: var(--reef); padding: 2px 6px; border-radius: 3px; }
+  pre { background: var(--rock2); border: 1px solid var(--border); border-radius: 4px; padding: 20px 24px; margin: 16px 0 24px; overflow-x: auto; }
+  pre code { background: none; padding: 0; color: var(--textd); font-size: 13px; line-height: 1.6; }
+  ul, ol { color: var(--textd); padding-left: 22px; margin-bottom: 14px; }
+  li { margin-bottom: 6px; }
+  strong { color: var(--text); font-weight: 600; }
+  em { color: var(--reef); font-style: italic; }
+  a { color: var(--reef); text-decoration: none; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0 28px; font-size: 14px; }
+  th { text-align: left; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--sand); padding: 8px 12px; border-bottom: 1px solid var(--border); }
+  td { padding: 9px 12px; border-bottom: 1px solid rgba(196,169,106,0.08); color: var(--textd); vertical-align: top; }
+  td:first-child { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--reef); white-space: nowrap; }
+  tr:hover td { background: var(--rock2); }
+  .subtitle { color: var(--mist); font-size: 15px; margin-bottom: 32px; }
+</style>
+</head>
+<body>
+
+<h1>Mesh671 Design System</h1>
+<p class="subtitle">Single-file static site (<code>index.html</code>). No build step. All theming lives in CSS custom properties defined on <code>:root</code> and overridden by <code>[data-theme]</code> attribute + <code>@media (prefers-color-scheme)</code>.</p>
+
+<hr>
+
+<h2>Color palette</h2>
+<p>CSS variables declared on <code>:root</code> (dark default) and overridden in <code>[data-theme="light"]</code> / <code>@media (prefers-color-scheme:light)</code>:</p>
+
+<table>
+  <tr><th>Token</th><th>Dark</th><th>Light</th><th>Role</th></tr>
+  <tr><td>--rock</td><td>#111614</td><td>#F0EBE0</td><td>Page / card background</td></tr>
+  <tr><td>--rock2</td><td>#161C1A</td><td>#E8E0D0</td><td>Alternate section background</td></tr>
+  <tr><td>--rock3</td><td>#1C2420</td><td>#DDD4C0</td><td>Hover / raised surface</td></tr>
+  <tr><td>--reef</td><td>#2DC4A8</td><td>#1A7A68</td><td>Primary accent (teal)</td></tr>
+  <tr><td>--reef2</td><td>#1FA090</td><td>#145A50</td><td>Reef hover / deeper teal</td></tr>
+  <tr><td>--sand</td><td>#C4A96A</td><td>#8A6820</td><td>Secondary accent (gold)</td></tr>
+  <tr><td>--sand2</td><td>#A88C50</td><td>#6A5010</td><td>Sand hover / deep gold</td></tr>
+  <tr><td>--mist</td><td>#5A7068</td><td>#7A6A50</td><td>Muted / subtext</td></tr>
+  <tr><td>--text</td><td>#E0EDE8</td><td>#1C2018</td><td>Body copy</td></tr>
+  <tr><td>--textd</td><td>#A8C0B8</td><td>#4A5040</td><td>Dimmed body copy</td></tr>
+  <tr><td>--dim</td><td>#3A5048</td><td>#A09070</td><td>Disabled / very muted</td></tr>
+  <tr><td>--border</td><td>rgba(196,169,106,0.14)</td><td>same</td><td>Subtle divider</td></tr>
+  <tr><td>--borderb</td><td>rgba(196,169,106,0.22)</td><td>same</td><td>Stronger divider (weave)</td></tr>
+  <tr><td>--navbg</td><td>rgba(17,22,20,0.96)</td><td>rgba(240,235,224,0.96)</td><td>Sticky nav backdrop</td></tr>
+</table>
+
+<h3>How theme switching works</h3>
+<p><code>data-theme</code> is set on <code>&lt;html&gt;</code> by a small JS toggle (no framework):</p>
+<pre><code>var root = document.documentElement;
+root.setAttribute('data-theme', t);   // 'light' or 'dark'
+localStorage.setItem('mesh671-theme', t);</code></pre>
+<p>On load it reads <code>localStorage</code> first, then falls back to <code>prefers-color-scheme</code>. Both the <code>[data-theme]</code> selector and <code>@media</code> block are declared in parallel so either mechanism works.</p>
+<p><strong>Cascade note:</strong> Light-mode overrides for elements with hardcoded dark backgrounds must come <em>after</em> the base rule in the stylesheet, or use higher specificity (<code>[data-theme="light"] .hero</code> beats <code>.hero</code>).</p>
+
+<hr>
+
+<h2>Typography</h2>
+<pre><code>EB Garamond   — headings, hero h1, stat numbers, footer wordmark
+DM Sans       — body copy, nav, buttons (base font)
+DM Mono       — eyebrow labels, chips, MQTT table, monospace callouts</code></pre>
+<p>Loaded via Google Fonts. Scale:</p>
+<ul>
+  <li>Hero h1: <code>clamp(40px, 6vw, 58px)</code>, weight 700, EB Garamond, <code>line-height: 1.08</code></li>
+  <li>Section h2: EB Garamond, <code>clamp(22px, 3vw, 30px)</code></li>
+  <li>Body: 16px / 1.65</li>
+  <li>Italic <code>&lt;em&gt;</code> in hero uses <code>color: var(--reef)</code></li>
+</ul>
+
+<hr>
+
+<h2>Layout</h2>
+<p>Single-column sections with <code>padding: 72px 5vw</code>. Max content width ~780px. Nav sticky at top with <code>backdrop-filter: blur(12px)</code>.</p>
+<p>Hero is full-height (<code>min-height: 100vh</code>), flex row: left text column + right island SVG positioned absolutely.</p>
+
+<hr>
+
+<h2>Hero section</h2>
+<pre><code>.hero
+  background: layered radial-gradients (oceanic depth)
+              → overridden in light mode to var(--rock)
+  min-height: 100vh
+  display: flex; align-items: flex-start; padding: 7vh 5vw 6vh
+
+  .hero-island   (position: absolute, inset: 0)
+    &lt;svg id="guam-svg"&gt;  — real lat/lon coordinates, Y-flipped
+      outline path: style="stroke:var(--reef)"  — adapts to theme
+      fill: rgba(45,196,168,0.06)  — subtle teal wash
+      #guam-mesh-lines: JS-drawn lines/circles inside clipPath
+      glow: drop-shadow filter on .hero-island svg
+
+  .hero-content   (position: relative, z-index: 2)
+    background: dark glass → rgba(240,235,224,0.72) in light mode
+    backdrop-filter: blur(6px)</code></pre>
+<p>SVG uses <code>viewBox="144.615 13.22 0.345 0.46"</code> (real Guam bounds) with <code>translate(0,26.9) scale(1,-1)</code> to correct SVG's inverted Y-axis vs latitude.</p>
+
+<hr>
+
+<h2>Grain texture</h2>
+<pre><code>body::after {
+  position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+  opacity: 0.08;
+  mix-blend-mode: overlay;   /* works on both light and dark */
+  background-image: url("data:image/svg+xml, &lt;feTurbulence fractalNoise …&gt;");
+  background-size: 260px 260px;
+}</code></pre>
+<p><code>mix-blend-mode: overlay</code> lets the same noise tile work on both themes — adds brightness variation on dark, subtracts on light. Parameters: <code>baseFrequency="0.72"</code>, <code>numOctaves="4"</code>, <code>stitchTiles="stitch"</code>, desaturated via <code>feColorMatrix</code>.</p>
+
+<hr>
+
+<h2>Components</h2>
+
+<h3>Why-cards</h3>
+<ul>
+  <li><code>background: var(--rock)</code></li>
+  <li>Left accent border: <code>border-left: 2px solid rgba(45,196,168,0.12)</code></li>
+  <li>Box-shadow: inner highlight + ambient drop</li>
+  <li>Hover: border brightens, background shifts to <code>--rock3</code></li>
+</ul>
+
+<h3>Gear cards</h3>
+<ul>
+  <li><code>background: var(--rock3)</code>, 1px border <code>var(--borderb)</code></li>
+  <li>Multi-layer shadow (near + ambient)</li>
+  <li>Hover: lifts 3px, border switches to <code>var(--reef)</code>, ambient teal glow</li>
+</ul>
+
+<h3>Stats bar</h3>
+<ul>
+  <li>Dark gradient in dark mode → <code>var(--rock2)</code> in light</li>
+  <li>Numbers: EB Garamond, <code>color: var(--sand)</code>, gold text-shadow glow</li>
+</ul>
+
+<h3>Chips / badges</h3>
+<ul>
+  <li>Teal-tinted bg, 1px teal border, <code>var(--reef)</code> text, DM Mono</li>
+</ul>
+
+<h3>Weave divider</h3>
+<ul>
+  <li>CSS <code>repeating-linear-gradient</code> crosshatch in <code>--borderb</code>, 28px tall</li>
+  <li>Sandwiched between <code>border-top/bottom: 1px solid var(--borderb)</code></li>
+</ul>
+
+<hr>
+
+<h2>Sections with hardcoded dark backgrounds</h2>
+<p>Any section with a hardcoded background must have a light-mode override placed <em>after</em> it in the CSS:</p>
+
+<table>
+  <tr><th>Selector</th><th>Dark background</th><th>Light override</th></tr>
+  <tr><td>.hero</td><td>multi-layer radial gradient</td><td>var(--rock)</td></tr>
+  <tr><td>.hero-content</td><td>rgba(10,18,14,0.72) glass</td><td>rgba(240,235,224,0.72)</td></tr>
+  <tr><td>.stats</td><td>linear-gradient(#0c1410, #111614)</td><td>var(--rock2)</td></tr>
+  <tr><td>section.alt</td><td>linear-gradient(#0e1916, #131e1b)</td><td>var(--rock2)</td></tr>
+</table>
+
+<hr>
+
+<h2>Footer</h2>
+<p>EB Garamond wordmark: <code>caldwell</code> in <code>var(--text)</code> + <code>.tech</code> in <code>var(--reef)</code>. Links back to caldwell.tech.</p>
+
+</body>
+</html>
